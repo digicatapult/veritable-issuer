@@ -5,7 +5,6 @@
 import { useState } from 'react'
 
 import useGetServerStatus from '../../../interface/hooks/use-get-server-status'
-
 import NavbarWrap from './../../Common/Navigation/NavbarWrap'
 import LogoWrap from '../../Common/Navigation/LogoWrap'
 import ErrorModal from './../../Common/Misc/ErrorModal'
@@ -19,7 +18,7 @@ import ContentSelectorWrap from '../../Common/Misc/ContentSelectorWrap'
 import ContentSelector from '../../Common/Misc/ContentSelector'
 import { ISSUER_LABEL } from '../../../utils/env'
 
-export default function AppCore({ agent }) {
+export default function AppCore() {
   const [configuredOrigin, setConfiguredOrigin] = useState('')
   const [data, setData] = useState({})
   const [status, error, startFetchHandler] = useGetServerStatus()
@@ -28,7 +27,7 @@ export default function AppCore({ agent }) {
 
   const saveOriginHandler = (insertedOrigin) => {
     const setStoreDataFn = (resData) => {
-      setData(resData)
+      setData({ ...data, ...resData })
     }
     setConfiguredOrigin(insertedOrigin)
     if (insertedOrigin !== '') {
@@ -39,12 +38,11 @@ export default function AppCore({ agent }) {
   return (
     <>
       <NavbarWrap>
-        <LogoWrap agent={agent} />
+        <LogoWrap />
         {status === 'idle' && !error && (
           <>
             <NavbarDropdownWrap
               status={status}
-              agent={agent}
               onSaveOrigin={saveOriginHandler}
             />
             <NavbarNavigationMenu status={status} />
@@ -53,23 +51,23 @@ export default function AppCore({ agent }) {
         )}
         {status === 'error' && (
           <>
-            <NavbarDropdownWrap status={status} agent={agent} />
+            <NavbarDropdownWrap status={status} />
             <NavbarNavigationMenu status={status} />
             <NavbarProfile status={status} />
           </>
         )}
         {status === 'fetching' && !error && (
           <>
-            <NavbarDropdownWrap status={status} agent={agent} />
+            <NavbarDropdownWrap status={status} />
             <NavbarNavigationMenu status={status} />
             <NavbarProfile status={status} />
           </>
         )}
         {status === 'fetched' && !error && (
           <>
-            <NavbarDropdownWrap status={status} agent={agent} />
+            <NavbarDropdownWrap status={status} />
             <NavbarNavigationMenu status={status} />
-            <NavbarProfile status={status} data={data} />
+            <NavbarProfile status={status} />
           </>
         )}
       </NavbarWrap>
