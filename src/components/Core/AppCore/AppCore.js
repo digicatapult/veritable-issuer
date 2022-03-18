@@ -23,10 +23,6 @@ export default function AppCore({ agent }) {
   const [data, setData] = useState({})
   const [status, error, startFetchHandler] = useGetServerStatus()
 
-  /* Example of data obj: */
-  /* {"version":"0.7.1","label":"faber.agent", "conductor":{"in_sessions":0,"out_encode":0,
-	"out_deliver":0,"task_active":1,"task_done":816, "task_failed":97,"task_pending":0}} */
-
   const saveOriginHandler = (insertedOrigin) => {
     const setStoreDataFn = (resData) => {
       setData(resData)

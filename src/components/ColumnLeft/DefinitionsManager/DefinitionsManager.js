@@ -4,7 +4,6 @@
  */
 import { useEffect, useState } from 'react'
 
-/* SMLyJXu6w2TBmJuVA6jKPL:3:CL:91:consortiq.agent.drone_schema */
 import useGetCredDefinitionsCreated from '../../../interface/hooks/use-get-cred-definitions-created'
 import usePostCredentialDefinitions from '../../../interface/hooks/use-post-credential-definitions'
 
