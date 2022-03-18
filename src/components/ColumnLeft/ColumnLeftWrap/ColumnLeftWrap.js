@@ -1,9 +1,3 @@
-/**
- * This function is responsible for rendering the left content column of the screen.
- * It is also responsible for handling the credential creation process
- * @returns The `ColumnLeftWrap` component returns a `div` element with a `div`
- * element inside of it.
- */
 import { useState } from 'react'
 import SchemasManager from '../SchemasManager'
 import DefinitionsManager from '../DefinitionsManager'

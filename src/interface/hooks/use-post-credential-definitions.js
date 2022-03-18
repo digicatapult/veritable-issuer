@@ -1,6 +1,3 @@
-/**
- * This function is used to create a credential definition
- */
 import { useCallback, useState } from 'react'
 import post from '../api/helpers/post'
 

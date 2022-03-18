@@ -1,6 +1,3 @@
-/**
- * This function is responsible for managing the schemas created by the issuer agent
- */
 import { useEffect, useState } from 'react'
 
 import useGetSchemasCreated from '../../../interface/hooks/use-get-schemas-created'

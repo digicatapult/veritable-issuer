@@ -23,7 +23,7 @@ export default function AppCore() {
   const [data, setData] = useState({})
   const [status, error, startFetchHandler] = useGetServerStatus()
 
-  const persona = `${ISSUER_LABEL}.agent`
+  const persona = ISSUER_LABEL
 
   const saveOriginHandler = (insertedOrigin) => {
     const setStoreDataFn = (resData) => {

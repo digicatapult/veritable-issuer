@@ -1,7 +1,3 @@
-/**
- * This function returns a breadcrumb for the issuer page
- * @returns A breadcrumb element.
- */
 export default function Breadcrumb() {
   return (
     <>

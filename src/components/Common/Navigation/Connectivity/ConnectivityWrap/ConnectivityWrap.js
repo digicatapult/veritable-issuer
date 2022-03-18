@@ -19,7 +19,6 @@ export default function ConnectivityWrap({
   persona,
 }) {
   const personaPrefix = persona?.toLowerCase().replace('.agent', '')
-
   const [dataConnections, setDataConnections] = useState(null)
   const [statusConnections, errorConnections, startGetConnectionsHandler] =
     useGetLoopedConn()

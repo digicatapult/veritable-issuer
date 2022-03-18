@@ -1,7 +1,3 @@
-/**
- * This function is used to manage the list of credential definitions created by
- * the issuer agent
- */
 import { useEffect, useState } from 'react'
 
 import useGetCredDefinitionsCreated from '../../../interface/hooks/use-get-cred-definitions-created'
