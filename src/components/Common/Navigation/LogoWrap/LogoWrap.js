@@ -1,7 +1,3 @@
-/**
- * This function is used to create the logo for the application
- * @returns A link with the logo component inside.
- */
 import Logo from '../../../Logo'
 
 export default function LogoWrap({ children }) {

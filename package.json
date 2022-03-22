@@ -1,6 +1,6 @@
 {
   "name": "veritable-issuer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Front-end for Veritable credentials issuer",
   "author": "Digital Catapult (https://www.digicatapult.org.uk/)",
   "license": "Apache-2.0",
