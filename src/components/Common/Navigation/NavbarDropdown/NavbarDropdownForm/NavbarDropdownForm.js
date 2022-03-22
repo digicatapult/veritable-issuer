@@ -1,7 +1,3 @@
-/**
- * This function is used to render the form for the navbar dropdown
- * @returns A form with two dropdown accordion cards.
- */
 export default function NavbarDropdownForm({
   defaultAgName,
   defaultOrigin,

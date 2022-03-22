@@ -1,8 +1,3 @@
-/**
- * This function is a wrapper for the Connections component. It's purpose is to
- * provide the connect form which allows the creation of connections with other
- * agents.
- */
 import { useEffect, useState } from 'react'
 import Connections from '../Connections'
 import ConnectionsActiveCount from '../ConnectionsActiveCount'
