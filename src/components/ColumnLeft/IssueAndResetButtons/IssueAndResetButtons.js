@@ -33,7 +33,8 @@ export default function IssueAndResetButtons({
     isDisabled = isDisabled || selectedType === ''
     return isDisabled
   }
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault()
     const setStoreDataIssueCb = (connectionId) => {
       if (!connectionId) {
         setIsDisconnected(true)
@@ -45,7 +46,8 @@ export default function IssueAndResetButtons({
     setIsDisconnected(false)
     startFetchConnIdHandler(origin, setStoreDataIssueCb)
   }
-  const resetHandler = () => {
+  const resetHandler = (e) => {
+    e.preventDefault()
     onActivatedReset()
   }
   return (
