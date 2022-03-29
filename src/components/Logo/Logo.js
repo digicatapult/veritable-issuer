@@ -15,9 +15,6 @@ export default function Logo() {
           height="62.000000pt"
           version="1.0"
         >
-          <metadata>
-            Created by potrace 1.16, written by Peter Selinger 2001-2019
-          </metadata>
           <g
             transform="translate(-150.000000,1150.000000) scale(0.100000,-0.100000)"
             fill="#ffffff"
