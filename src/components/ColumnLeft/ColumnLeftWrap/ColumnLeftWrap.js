@@ -5,7 +5,8 @@ import AttributesManager from '../AttributesManager'
 import IssueAndResetButtons from '../IssueAndResetButtons/IssueAndResetButtons'
 import usePostIssueCredentialSendOffer from '../../../interface/hooks/use-post-issue-credential-send-offer'
 
-export default function ColumnLeftWrap({ origin, persona }) {
+export default function ColumnLeftWrap({ origin, persona, connections }) {
+  const [selectedConnection, setSelectedConnection] = useState('')
   const [selectedSchemaId, setSelectedSchemaId] = useState('')
   const [selectedCredDefId, setSelectedCredDefId] = useState('')
   const [selectedId, setSelectedId] = useState('')
@@ -21,6 +22,11 @@ export default function ColumnLeftWrap({ origin, persona }) {
   const [dataIssueCred, setDataIssueCred] = useState('')
   const [errorIssueCred, startFetchHandler] = usePostIssueCredentialSendOffer()
 
+  const chooseConnectionHandler = (e) => {
+    const v = e.target.value
+    setSelectedConnection(v)
+  }
+
   const selectedSchemaHandler = (chosenSchemaId) => {
     setSelectedCredDefId('')
     setSelectedSchemaId(chosenSchemaId)
@@ -29,6 +35,7 @@ export default function ColumnLeftWrap({ origin, persona }) {
     setSelectedCredDefId(chosenDefinitionId)
   }
   const activatedResetHandler = () => {
+    setSelectedConnection('')
     setSelectedSchemaId('')
     setSelectedCredDefId('')
     setSelectedId('')
@@ -39,12 +46,12 @@ export default function ColumnLeftWrap({ origin, persona }) {
     setSelectedExpiration('')
     setSelectedType('')
   }
-  const activatedSubmitHandler = (connectionId) => {
+  const activatedSubmitHandler = () => {
     const setStoreDataFn = setDataIssueCred
     const setStoreStatusFn = setStatusIssueCred
     startFetchHandler(
       origin,
-      connectionId,
+      selectedConnection,
       selectedCredDefId,
       selectedId,
       selectedName,
@@ -82,6 +89,11 @@ export default function ColumnLeftWrap({ origin, persona }) {
     setStatusIssueCred('idle')
   }
 
+  const activeConnections =
+    connections.results?.filter(
+      (connection) => connection.state === 'active'
+    ) || []
+
   return (
     <>
       <div className="col-md-6">
@@ -96,76 +108,86 @@ export default function ColumnLeftWrap({ origin, persona }) {
 
               <form>
                 <div className="row">
-                  <>
-                    <>
-                      <SchemasManager
-                        origin={origin}
-                        onSelectedSchema={selectedSchemaHandler}
-                        selectedSchemaId={selectedSchemaId}
-                      />
-                    </>
-                  </>
+                  <SchemasManager
+                    origin={origin}
+                    onSelectedSchema={selectedSchemaHandler}
+                    selectedSchemaId={selectedSchemaId}
+                  />
 
-                  <>
-                    {selectedSchemaId !== '' && (
-                      <>
-                        <DefinitionsManager
-                          origin={origin}
-                          persona={persona}
-                          onSelectedDefinition={selectedDefinitionHandler}
-                          selectedSchemaId={selectedSchemaId}
-                          selectedCredDefId={selectedCredDefId}
-                        />
-                      </>
-                    )}
-                  </>
+                  {selectedSchemaId && (
+                    <DefinitionsManager
+                      origin={origin}
+                      persona={persona}
+                      onSelectedDefinition={selectedDefinitionHandler}
+                      selectedSchemaId={selectedSchemaId}
+                      selectedCredDefId={selectedCredDefId}
+                    />
+                  )}
                 </div>
 
                 <hr />
 
-                <div className="text-black">
-                  <>
-                    {selectedSchemaId !== '' && selectedCredDefId !== '' && (
-                      <>
-                        <AttributesManager
-                          selectedId={selectedId}
-                          selectedTitle={selectedTitle}
-                          selectedName={selectedName}
-                          selectedSubtitle={selectedSubtitle}
-                          selectedSurname={selectedSurname}
-                          selectedExpiration={selectedExpiration}
-                          selectedType={selectedType}
-                          onInsertedId={insertedIdHandler}
-                          onInsertedTitle={insertedTitleHandler}
-                          onInsertedName={insertedNameHandler}
-                          onInsertedSubtitle={insertedSubtitleHandler}
-                          onInsertedSurname={insertedSurnameHandler}
-                          onInsertedExpiration={insertedExpirationHandler}
-                          onChosenType={chosenTypeHandler}
-                        />
-                      </>
-                    )}
-                  </>
-                </div>
+                {selectedSchemaId && selectedCredDefId && (
+                  <div className="form-group">
+                    <label htmlFor="connection">Connection:</label>
+                    <select
+                      name="connection"
+                      className="form-control"
+                      id="connection"
+                      onChange={chooseConnectionHandler}
+                      value={selectedConnection}
+                    >
+                      <option value="" disabled>
+                        - Select -
+                      </option>
+                      {activeConnections.map((connection) => {
+                        return (
+                          <option
+                            key={connection.connection_id}
+                            value={connection.connection_id}
+                          >
+                            {connection.their_label}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </div>
+                )}
+                {selectedConnection && (
+                  <AttributesManager
+                    selectedId={selectedId}
+                    selectedTitle={selectedTitle}
+                    selectedName={selectedName}
+                    selectedSubtitle={selectedSubtitle}
+                    selectedSurname={selectedSurname}
+                    selectedExpiration={selectedExpiration}
+                    selectedType={selectedType}
+                    onInsertedId={insertedIdHandler}
+                    onInsertedTitle={insertedTitleHandler}
+                    onInsertedName={insertedNameHandler}
+                    onInsertedSubtitle={insertedSubtitleHandler}
+                    onInsertedSurname={insertedSurnameHandler}
+                    onInsertedExpiration={insertedExpirationHandler}
+                    onChosenType={chosenTypeHandler}
+                  />
+                )}
 
                 <div className="row">
-                  <>
-                    <IssueAndResetButtons
-                      origin={origin}
-                      onActivatedReset={activatedResetHandler}
-                      onActivatedSubmit={activatedSubmitHandler}
-                      selectedSchemaId={selectedSchemaId}
-                      selectedCredDefId={selectedCredDefId}
-                      selectedId={selectedId}
-                      selectedTitle={selectedTitle}
-                      selectedName={selectedName}
-                      selectedSubtitle={selectedSubtitle}
-                      selectedSurname={selectedSurname}
-                      selectedExpiration={selectedExpiration}
-                      selectedType={selectedType}
-                      statusIssueCred={statusIssueCred}
-                    />
-                  </>
+                  <IssueAndResetButtons
+                    origin={origin}
+                    onActivatedReset={activatedResetHandler}
+                    onActivatedSubmit={activatedSubmitHandler}
+                    selectedSchemaId={selectedSchemaId}
+                    selectedCredDefId={selectedCredDefId}
+                    selectedId={selectedId}
+                    selectedTitle={selectedTitle}
+                    selectedName={selectedName}
+                    selectedSubtitle={selectedSubtitle}
+                    selectedSurname={selectedSurname}
+                    selectedExpiration={selectedExpiration}
+                    selectedType={selectedType}
+                    statusIssueCred={statusIssueCred}
+                  />
                 </div>
               </form>
             </div>
