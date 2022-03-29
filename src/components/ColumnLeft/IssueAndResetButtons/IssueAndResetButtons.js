@@ -2,8 +2,11 @@
  * This function is used to display the buttons for issuing and resetting the
  * credential
  */
+import { useState } from 'react'
+import useGetConn from '../../../interface/hooks/use-get-conn'
 
 export default function IssueAndResetButtons({
+  origin,
   onActivatedReset,
   onActivatedSubmit,
   selectedSchemaId,
@@ -17,6 +20,8 @@ export default function IssueAndResetButtons({
   selectedType,
   statusIssueCred,
 }) {
+  const [isDisconnected, setIsDisconnected] = useState(false)
+  const [statusConnId, errorConnId, startFetchConnIdHandler] = useGetConn()
   const isDisabledForm = () => {
     let isDisabled = false
     isDisabled = isDisabled || selectedId === ''
@@ -30,8 +35,16 @@ export default function IssueAndResetButtons({
   }
   const submitHandler = (e) => {
     e.preventDefault()
-    onActivatedSubmit()
+    const setStoreDataIssueCb = (connectionId) => {
+      if (!connectionId) {
+        setIsDisconnected(true)
+        return
+      }
+      onActivatedSubmit(connectionId)
+    }
     onActivatedReset()
+    setIsDisconnected(false)
+    startFetchConnIdHandler(origin, setStoreDataIssueCb)
   }
   const resetHandler = (e) => {
     e.preventDefault()
@@ -50,12 +63,21 @@ export default function IssueAndResetButtons({
             isDisabledForm()
           }
         >
-          {statusIssueCred === 'fetching' && (
+          {(statusConnId === 'fetching' || statusIssueCred === 'fetching') && (
             <>
               <i className="fa fa-spinner fa-pulse"></i>
             </>
           )}
           &nbsp; Issue &nbsp;
+          {isDisconnected && (
+            <>
+              <span className="small">
+                ( &nbsp;
+                <i className="fa fa-exclamation-triangle"></i>
+                &nbsp; disconnected )
+              </span>
+            </>
+          )}
         </button>
       </div>
       <div className="col-md-1">&nbsp;</div>
@@ -68,6 +90,22 @@ export default function IssueAndResetButtons({
         >
           &nbsp;Reset&nbsp;
         </button>
+      </div>
+
+      <div
+        className={`${errorConnId ? 'd-block' : 'd-none'}`}
+        style={{
+          position: 'fixed',
+          width: '10%',
+          height: '10%',
+          inset: '0px',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 100,
+        }}
+      >
+        <div className="text-light m-2 p-2">
+          <small>Failed to fetch: {errorConnId}</small>
+        </div>
       </div>
     </>
   )

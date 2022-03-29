@@ -20,7 +20,6 @@ import { ISSUER_LABEL } from '../../../utils/env'
 
 export default function AppCore() {
   const [configuredOrigin, setConfiguredOrigin] = useState('')
-  const [connections, setConnections] = useState({ results: null })
   const [data, setData] = useState({})
   const [status, error, startFetchHandler] = useGetServerStatus()
 
@@ -79,8 +78,6 @@ export default function AppCore() {
             serverStatus={status}
             origin={configuredOrigin}
             persona={persona}
-            connections={connections}
-            setConnections={setConnections}
           />
         )}
       </ConnectivityAndBreadcrumbWrap>
@@ -88,7 +85,7 @@ export default function AppCore() {
         <ContentSelector
           status={status}
           origin={configuredOrigin}
-          connections={connections}
+          persona={persona}
         />
       </ContentSelectorWrap>
       {status === 'error' && <ErrorModal visibility content={error} />}
