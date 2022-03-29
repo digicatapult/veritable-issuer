@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 import useGetCredDefinitionsCreated from '../../../interface/hooks/use-get-cred-definitions-created'
 import usePostCredentialDefinitions from '../../../interface/hooks/use-post-credential-definitions'
+import { ISSUER_LABEL } from '../../../utils/env'
 
 export default function DefinitionsManager({
   origin,
-  persona,
   selectedSchemaId,
   selectedCredDefId,
   onSelectedDefinition,
@@ -37,7 +37,7 @@ export default function DefinitionsManager({
         prev.indexOf(definitionId) > -1 ? prev : [...prev, definitionId]
       )
     }
-    startFetchHandler(origin, selectedSchemaId, persona, setDataFn)
+    startFetchHandler(origin, selectedSchemaId, ISSUER_LABEL, setDataFn)
   }
 
   const chooseDefinitionHandler = (e) => {
