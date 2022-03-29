@@ -5,7 +5,7 @@ import AttributesManager from '../AttributesManager'
 import IssueAndResetButtons from '../IssueAndResetButtons/IssueAndResetButtons'
 import usePostIssueCredentialSendOffer from '../../../interface/hooks/use-post-issue-credential-send-offer'
 
-export default function ColumnLeftWrap({ origin, connections }) {
+export default function ColumnLeftWrap({ origin, persona, connections }) {
   const [selectedConnection, setSelectedConnection] = useState('')
   const [selectedSchemaId, setSelectedSchemaId] = useState('')
   const [selectedCredDefId, setSelectedCredDefId] = useState('')
@@ -117,6 +117,7 @@ export default function ColumnLeftWrap({ origin, connections }) {
                   {selectedSchemaId && (
                     <DefinitionsManager
                       origin={origin}
+                      persona={persona}
                       onSelectedDefinition={selectedDefinitionHandler}
                       selectedSchemaId={selectedSchemaId}
                       selectedCredDefId={selectedCredDefId}

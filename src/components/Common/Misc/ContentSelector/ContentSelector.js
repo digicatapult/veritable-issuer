@@ -4,6 +4,7 @@ export default function ContentSelector({
   children,
   status,
   origin,
+  persona,
   connections,
 }) {
   return (
@@ -13,7 +14,11 @@ export default function ContentSelector({
         <div className="py-4 my-4">&nbsp;</div>
       )}
       {!children && status === 'fetched' && (
-        <ContentWrap origin={origin} connections={connections} />
+        <ContentWrap
+          origin={origin}
+          persona={persona}
+          connections={connections}
+        />
       )}
     </>
   )

@@ -88,6 +88,7 @@ export default function AppCore() {
         <ContentSelector
           status={status}
           origin={configuredOrigin}
+          persona={persona}
           connections={connections}
         />
       </ContentSelectorWrap>

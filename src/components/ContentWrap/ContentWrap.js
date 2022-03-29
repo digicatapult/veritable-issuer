@@ -1,10 +1,14 @@
 import ColumnLeftWrap from '../ColumnLeft/ColumnLeftWrap'
 import ColumnRightWrap from '../ColumnRight/ColumnRightWrap'
 
-export default function ContentWrap({ origin, connections }) {
+export default function ContentWrap({ origin, persona, connections }) {
   return (
     <>
-      <ColumnLeftWrap origin={origin} connections={connections} />
+      <ColumnLeftWrap
+        origin={origin}
+        persona={persona}
+        connections={connections}
+      />
       <ColumnRightWrap origin={origin} />
     </>
   )
