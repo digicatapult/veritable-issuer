@@ -11,7 +11,7 @@ export default function LogoWrap({ children }) {
       <span>
         &nbsp;
         <b className="small">
-          Drone Training <span className="small">Ltd.</span>
+          <span className="small">&nbsp;</span>
         </b>
       </span>
       {children && children}
