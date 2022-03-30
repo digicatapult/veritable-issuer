@@ -15,7 +15,8 @@
   },
   "env": {
     "es6": true,
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "globals": {
     "process": true
@@ -55,7 +56,8 @@
         "cypress/no-pause": "error"
       },
       "env": {
-        "cypress/globals": true
+        "cypress/globals": true,
+        "node": true
       }
     }
   ]
