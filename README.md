@@ -2,7 +2,9 @@
 
 ## Description
 
-Front-end for a license Issuer in Veritable. Issuers can issue credentials that later can be approved by the CAA authorities. 
+Front-end for a license Issuer ( FlyDesire ) in Veritable. Issuers can issue credentials that later can be approved by the Regulator.
+
+---
 
 ## Getting started
 
@@ -13,6 +15,8 @@ To start the application, run:
 ```sh
 npm run start
 ```
+
+---
 
 ## Interacting with the ACA Swagger API Layer directly
 
@@ -32,3 +36,4 @@ All the React components / sub-components, in this project are developed using t
 
 That means that every existing React component here has its own folder with an _index.js_ file and the component itself. This makes importing components more elegant. In addition, certain components are grouped inside folders and sub-folders.
 
+---
