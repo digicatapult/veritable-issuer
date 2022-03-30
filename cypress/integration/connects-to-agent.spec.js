@@ -13,30 +13,9 @@ function mockAgentEndpoints(url) {
     },
     { fixture: 'agent-status.json'}
   ).as('agentStatus')
-  cy.intercept(
-    {
-      method: 'GET',
-      url: `${url}/connections?`,
-    },
-    { results: []}
-  ).as('agentConnections')
-  cy.intercept(
-    {
-      method: 'GET',
-      url: `${url}/credentials?`,
-    },
-    { results: []}
-  ).as('agentCredentials')
-  cy.intercept(
-    {
-      method: 'GET',
-      url: `${url}/resent-proof-2.0/records?`,
-    },
-    { results: []}
-  ).as('agentRecords')
 }
 
-describe('Integration tests for Holder persona', () => {
+describe('Integration tests for Issuer UI', () => {
   const url = env.ISSUER_ORIGIN
   before(() => {
     cy.clearCookies()
@@ -44,17 +23,11 @@ describe('Integration tests for Holder persona', () => {
     cy.visit('/')
   })
   
-  beforeEach(() => {
-    mockAgentEndpoints(url)
-  })
+  beforeEach(() => mockAgentEndpoints(url))
 
-  describe('happy path', () => {
+  describe('connection to an agent', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:3000')
-    })
-
-    it('renders DOM', () => {
-      cy.get('#root').should('exist')
+      cy.visit('/')
     })
     
     describe('if agent does not respond', () => {
@@ -62,22 +35,18 @@ describe('Integration tests for Holder persona', () => {
         cy.intercept('GET', `${url}/status?`, { forceNetworkError: true }).as('agentStatusErr')
         cy.get('[data-cy=switch-to-custom-endpoint]').click()
         cy.wait('@agentStatusErr').should('have.property', 'error')
-          // assert for modal etc
-          // cy.get('[data-cy=modal-server-error]')
-          //   .should('exist')
-          //   .contains(networkErrorMessage)
       })
     })
-    
-    describe('connection to agent', () => {
-      beforeEach(() => {
-        cy.get('[data-cy=switch-to-custom-endpoint]').click()
-      })
 
-      it('retrieves agent \'s status from \`/status?\` endpoint', () => {
-        cy.wait('@agentStatus').then(({ response }) => {
-          assert.equal(response.statusCode, 200) 
-        })
+    it('renders DOM', () => {
+      cy.get('[data-cy=switch-to-custom-endpoint]').click()
+      cy.get('#root').should('exist')
+    })
+
+    it('retrieves agent\'s status from \'/status?\' endpoint', () => {
+      cy.get('[data-cy=switch-to-custom-endpoint]').click()
+      cy.wait('@agentStatus').then(({ response }) => {
+        assert.equal(response.statusCode, 200) 
       })
     })
   })
