@@ -1,5 +1,9 @@
 # veritable-issuer
 
+## Deprecation Notice
+This application was deprecated on March 14th 2024, there will be no further dependency or security updates.
+---
+
 ## Description
 
 Front-end for a license Issuer ( FlyDesire ) in Veritable. Issuers can issue credentials that later can be approved by the Regulator.
